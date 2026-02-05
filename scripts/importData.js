@@ -7,7 +7,8 @@ require('dotenv').config();
 const TourismData = require('../models/TourismData');
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/hawaii_tourism';
-const CSV_FILE = path.join(__dirname, '../../Downloads/Hawaii Tourism Data (from DBEDT Data Warehouse) (1).csv');
+const CSV_FILE =
+  process.env.CSV_FILE || path.join(__dirname, '../standalone/data.csv');
 
 // Keywords to skip (footer rows)
 const SKIP_KEYWORDS = [
