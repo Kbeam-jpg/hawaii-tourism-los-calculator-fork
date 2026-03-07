@@ -12,6 +12,8 @@ const loadingDiv = document.getElementById('loading');
 const errorDiv = document.getElementById('error');
 const resultsDiv = document.getElementById('results');
 
+const demo = document.getElementById("demo");
+
 // Initialize the app
 async function init() {
     try {
@@ -213,8 +215,30 @@ function createChart(chartData) {
             },
             interaction: {
                 mode: 'nearest',
-                axis: 'x',
+                axis: 'xy', //default - onHover -> mutable
                 intersect: false
+            },
+            onHover: (e) => {
+
+                //get mouse y position inside chart canvas
+                const rect = this.canvas.getBoundingClientRect();
+                const y = e.clientY - rect.top;
+                const area = this.chartArea;
+
+                
+
+                // if below chart x-axis -> interaction.axis = 'x'
+                // , else interaction.axis = 'xy'
+                const newAxis = (y >= area.bottom) ? 'x' : 'xy';
+
+                demo.innerHTML = "y: " + y + "<br>newAxis: " + newAxis + "<br>area.bottom" + area.bottom;
+
+                // // if different than what's stored -> swap
+                // if (this.options.interaction.axis !== newAxis) {
+                //     this.options.interaction.axis = newAxis;
+                //     // no animation
+                //     this.update('none');
+                // }
             }
         }
     });
